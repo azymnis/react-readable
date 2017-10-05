@@ -1,3 +1,15 @@
+// Global actions
+export const INITIALIZE_STATE = "INITIALIZE_STATE"
+
+export function initializeState({categories, posts, comments}) {
+  return {
+    type: INITIALIZE_STATE,
+    categories,
+    posts,
+    comments
+  }
+}
+
 // Post actions
 export const CREATE_POST    = "CREATE_POST"
 export const DELETE_POST    = "DELETE_POST"
