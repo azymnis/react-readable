@@ -4,7 +4,6 @@ export const INITIALIZE_STATE = "INITIALIZE_STATE"
 export function initializeState({categories, posts, comments}) {
   return {
     type: INITIALIZE_STATE,
-    categories,
     posts,
     comments
   }
