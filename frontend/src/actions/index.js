@@ -1,3 +1,5 @@
+import * as BackendAPI from '../utils/api.js'
+
 // Global actions
 export const INITIALIZE_STATE = "INITIALIZE_STATE"
 
@@ -6,6 +8,14 @@ export function initializeState({categories, posts, comments}) {
     type: INITIALIZE_STATE,
     posts,
     comments
+  }
+}
+
+export function fetchInitialState() {
+  return dispatch => {
+    BackendAPI.getInitialState().then(data =>
+      dispatch(initializeState(data))
+    )
   }
 }
 

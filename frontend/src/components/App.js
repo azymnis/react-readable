@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as BackendAPI from '../utils/api.js'
-import { initializeState } from '../actions'
+import { fetchInitialState } from '../actions'
 
 class App extends Component {
   state = {
@@ -14,7 +14,7 @@ class App extends Component {
         return { categories }
       })
     })
-    BackendAPI.getInitialState().then(data => this.props.initializeState(data))
+    this.props.fetchInitialState()
   }
 
   render() {
@@ -26,7 +26,7 @@ class App extends Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    initializeState: data => dispatch(initializeState(data))
+    fetchInitialState: data => dispatch(fetchInitialState(data))
   }
 }
 
