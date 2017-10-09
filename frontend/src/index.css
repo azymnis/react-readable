@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.vote-element {
+  min-width: 100px;
+}
+
 .vote-top {
   padding-bottom: 5px;
 }

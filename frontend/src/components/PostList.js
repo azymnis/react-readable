@@ -13,7 +13,7 @@ class PostList extends Component {
     const posts = this.props.posts
     return Object.keys(posts).length > 0 ? Object.keys(posts).map( (id, index) => (
         <Row key={id}>
-          <Col xs={1}>
+          <Col className="vote-element" xs={1} md={1} lg={1}>
             <Panel>
               <div className="vote-top" onClick={() => this.props.upVotePost(id)}><Glyphicon glyph="triangle-top" /></div>
               <div className="vote-badge"><Badge>{posts[id].voteScore}</Badge></div>
@@ -21,7 +21,7 @@ class PostList extends Component {
               <div className="vote-bottom" onClick={() => this.props.downVotePost(id)}><Glyphicon glyph="triangle-bottom" /></div>
             </Panel>
           </Col>
-          <Col xs={11}>
+          <Col xs={8} md={10} lg={10}>
             <h3><a>{posts[id].title}</a></h3>
             <h4>by <em>{posts[id].author}</em> with {posts[id].comments.length} comments</h4>
             <Button bsStyle="primary">Edit <Glyphicon glyph="pencil" /></Button>
