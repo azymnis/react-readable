@@ -3,3 +3,26 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.vote-top {
+  padding-bottom: 5px;
+}
+
+.vote-bottom {
+  padding-top: 5px;
+}
+
+.vote-top, .vote-bottom {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.vote-badge {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.vote-text {
+  width: 100%;
+  margin: 0 auto;
+}
