@@ -55,16 +55,24 @@ export function editPost({id, title, body}) {
 }
 
 export function upVotePost(id) {
-  return {
-    type: UP_VOTE_POST,
-    id
+  return dispatch => {
+    BackendAPI.upVotePost(id).then(() =>
+      dispatch({
+        type: UP_VOTE_POST,
+        id
+      })
+    )
   }
 }
 
 export function downVotePost(id) {
-  return {
-    type: DOWN_VOTE_POST,
-    id
+  return dispatch => {
+    BackendAPI.downVotePost(id).then(() =>
+      dispatch({
+        type: DOWN_VOTE_POST,
+        id
+      })
+    )
   }
 }
 

@@ -33,7 +33,7 @@ class App extends Component {
         </Row>
         <PostList/>
       </Grid>
-    );
+    )
   }
 }
 

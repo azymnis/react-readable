@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import * as BackendAPI from '../utils/api.js'
+import { upVotePost, downVotePost } from '../actions'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import Panel from 'react-bootstrap/lib/Panel'
@@ -14,10 +14,10 @@ class PostList extends Component {
       <Row key={id}>
         <Col xs={1}>
           <Panel>
-            <div className="vote-top"><a><Glyphicon glyph="triangle-top" /></a></div>
+            <div className="vote-top" onClick={() => this.props.upVotePost(id)}><Glyphicon glyph="triangle-top" /></div>
             <div className="vote-badge"><span className="badge">{posts[id].voteScore}</span></div>
             <div className="vote-text"><strong>votes</strong></div>
-            <div className="vote-bottom"><a><Glyphicon glyph="triangle-bottom" /></a></div>
+            <div className="vote-bottom" onClick={() => this.props.downVotePost(id)}><Glyphicon glyph="triangle-bottom" /></div>
           </Panel>
         </Col>
         <Col xs={11}>
@@ -35,6 +35,14 @@ function mapStateToProps ({ posts }) {
   return { posts }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    upVotePost: id => dispatch(upVotePost(id)),
+    downVotePost: id => dispatch(downVotePost(id))
+  }
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(PostList)

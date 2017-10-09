@@ -1,10 +1,26 @@
 import { combineReducers } from 'redux'
-import { INITIALIZE_STATE } from '../actions'
+import { INITIALIZE_STATE, UP_VOTE_POST, DOWN_VOTE_POST } from '../actions'
 
 function posts(state = {}, action) {
   switch (action.type) {
     case INITIALIZE_STATE:
       return action.posts
+    case UP_VOTE_POST:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          voteScore: state[action.id].voteScore + 1
+        }
+      }
+    case DOWN_VOTE_POST:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          voteScore: state[action.id].voteScore - 1
+        }
+      }
     default:
       return state
   }

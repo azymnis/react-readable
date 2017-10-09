@@ -9,6 +9,22 @@ const headers = {
   'Authorization': token
 }
 
+function updateWithData(url, method, body) {
+  return fetch(url, {
+   method,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }).then(res => {
+    if (res.ok) {
+      return res.json()
+    }
+    throw new Error(`Backend api update failed for url: ${url}`)
+  })
+}
+
 function getUrlToJson(url) {
   return fetch(url, { headers })
     .then(res => res.json())
@@ -24,6 +40,14 @@ export function getAllPosts() {
 
 export function getAllCommentsForPost(id) {
   return getUrlToJson(`${api}/posts/${id}/comments`)
+}
+
+export function upVotePost(id) {
+  return updateWithData(`${api}/posts/${id}`, 'POST', {option: 'upVote'})
+}
+
+export function downVotePost(id) {
+  return updateWithData(`${api}/posts/${id}`, 'POST', {option: 'downVote'})
 }
 
 /**
