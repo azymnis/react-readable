@@ -44,13 +44,9 @@ class ReadableNavbar extends Component {
         <Modal
           isOpen={this.state.showModal}
           aria={{
-            labelledby: "heading",
-            describedby: "full_description"
+            labelledby: "heading"
           }}>
-          <h1 id="heading">H1</h1>
-          <div id="full_description">
-            <p>Description goes here.</p>
-          </div>
+          <h1 id="heading">Create new post</h1>
           <Button onClick={this.closeModal}>Close</Button>
         </Modal>
       </Grid>

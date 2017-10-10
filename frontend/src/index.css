@@ -4,29 +4,44 @@ body {
   font-family: sans-serif;
 }
 
+.vote-panel .panel-body {
+  padding-top: 5px;
+  padding-bottom: 0;
+}
+
 .vote-element {
   min-width: 100px;
 }
 
 .vote-top {
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
 .vote-bottom {
-  padding-top: 5px;
+  padding-top: 0px;
 }
 
 .vote-top, .vote-bottom {
-  width: 40%;
-  margin: 0 auto;
+  font-size: 35px;
+  text-align: center;
+}
+
+.vote-top:hover, .vote-bottom:hover {
+  color: blue;
+  cursor: pointer;
+  cursor: hand;
 }
 
 .vote-badge {
-  width: 60%;
-  margin: 0 auto;
+  text-align: center;
+}
+
+.vote-badge .badge {
+  font-size: 20px;
+  text-align: center;
 }
 
 .vote-text {
-  width: 100%;
-  margin: 0 auto;
+  text-align: center;
+  font-size: 15px;
 }

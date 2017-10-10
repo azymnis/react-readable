@@ -14,7 +14,7 @@ class PostList extends Component {
     return Object.keys(posts).length > 0 ? Object.keys(posts).map( (id, index) => (
         <Row key={id}>
           <Col className="vote-element" xs={1} md={1} lg={1}>
-            <Panel>
+            <Panel className="vote-panel">
               <div className="vote-top" onClick={() => this.props.upVotePost(id)}><Glyphicon glyph="triangle-top" /></div>
               <div className="vote-badge"><Badge>{posts[id].voteScore}</Badge></div>
               <div className="vote-text"><strong>votes</strong></div>
