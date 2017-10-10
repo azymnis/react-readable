@@ -51,21 +51,22 @@ export function downVotePost(id) {
 }
 
 /**
- * This will return a promise of an object which has two keys:
- * posts and comments. The value of posts is a map of postId to post.
+ * This will return a promise of an object which has three keys:
+ * posts, comments and categories. The value of posts is a map of postId to post.
  * Each post contains a list of all commentIds of all child comments
  * for that post. Similarly comments is a map of commentId to comment.
+ * Categories is just a list of category objects.
  */
 export function getInitialState() {
-  return getAllPosts().then(posts =>
+  return Promise.all([getAllPosts().then(posts =>
     Promise.all(posts.map(post =>
       getAllCommentsForPost(post.id).then(comments => {
         return { post, comments }
       })
     ))
-  ).then(resultList => {
-    const result = { posts: {}, comments: {}}
-    resultList.forEach (({ post, comments }) => {
+  ), getAllCategories()]).then(resultsAndCategories => {
+    const result = { posts: {}, comments: {}, categories: resultsAndCategories[1]}
+    resultsAndCategories[0].forEach (({ post, comments }) => {
       const commentIds = comments.map(comment => comment.id)
       post.comments = commentIds
       result.posts[post.id] = post

@@ -7,7 +7,8 @@ export function initializeState({categories, posts, comments}) {
   return {
     type: INITIALIZE_STATE,
     posts,
-    comments
+    comments,
+    categories
   }
 }
 

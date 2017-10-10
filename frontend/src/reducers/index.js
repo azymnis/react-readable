@@ -35,8 +35,18 @@ function comments(state = {}, action) {
   }
 }
 
+function categories(state = [], action) {
+  switch (action.type) {
+    case INITIALIZE_STATE:
+      return action.categories
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   posts,
   comments,
+  categories
 })
 
