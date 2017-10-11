@@ -37,9 +37,15 @@ class PostForm extends Component {
 
   submitForm = () => {
     const { author, title, category, body } = this.state
-    this.props.createPost({ author, title, category, body }).then(() =>
+    this.props.createPost({ author, title, category, body }).then(() => {
+      this.setState({
+        author: "",
+        title: "",
+        category: "",
+        body: ""
+      })
       this.props.closeModal()
-    )
+    })
   }
 
   render() {
@@ -64,7 +70,7 @@ class PostForm extends Component {
             content : {
               margin                     : '0 auto',
               width                      : '50%',
-              "min-width"                : '500px',
+              minWidth                   : '500px',
               position                   : 'absolute',
               top                        : '40px',
               left                       : '40px',

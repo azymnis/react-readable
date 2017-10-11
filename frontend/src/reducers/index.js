@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { INITIALIZE_STATE, UP_VOTE_POST, DOWN_VOTE_POST, CREATE_POST } from '../actions'
+import { INITIALIZE_STATE, UP_VOTE_POST, DOWN_VOTE_POST, CREATE_POST, DELETE_POST } from '../actions'
 
 function posts(state = {}, action) {
   switch (action.type) {
@@ -20,6 +20,14 @@ function posts(state = {}, action) {
           comments: []
         }
       }
+    case DELETE_POST:
+      const filtered = Object.keys(state)
+        .filter(key => key !== action.id)
+        .reduce((obj, key) => {
+          obj[key] = state[key]
+          return obj
+        }, {})
+      return filtered
     case UP_VOTE_POST:
       return {
         ...state,
@@ -45,6 +53,14 @@ function comments(state = {}, action) {
   switch (action.type) {
     case INITIALIZE_STATE:
       return action.comments
+    case DELETE_POST:
+      const filtered = Object.keys(state)
+        .filter(key => state[key].parentId !== action.id)
+        .reduce((obj, key) => {
+          obj[key] = state[key]
+          return obj
+        }, {})
+      return filtered
     default:
       return state
   }
