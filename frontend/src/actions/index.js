@@ -1,4 +1,5 @@
 import * as BackendAPI from '../utils/api.js'
+import uuidv4 from 'uuid/v4'
 
 // Global actions
 export const INITIALIZE_STATE = "INITIALIZE_STATE"
@@ -27,15 +28,17 @@ export const EDIT_POST      = "EDIT_POST"
 export const UP_VOTE_POST   = "UP_VOTE_POST"
 export const DOWN_VOTE_POST = "DOWN_VOTE_POST"
 
-export function createPost({id, timestamp, title, body, author, category}) {
-  return {
-    type: CREATE_POST,
-    id,
-    timestamp,
-    title,
-    body,
-    author,
-    category
+export function createPost({title, body, author, category}) {
+  return dispatch => {
+    const id = uuidv4()
+    const timestamp = Date.now()
+    const post = {id, timestamp, title, body, author, category}
+    return BackendAPI.createPost(post).then(() =>
+      dispatch({
+        type: CREATE_POST,
+        ...post
+      })
+    )
   }
 }
 

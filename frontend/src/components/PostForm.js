@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
+import { createPost } from '../actions'
 
 class PostForm extends Component {
   state = {
@@ -12,7 +13,6 @@ class PostForm extends Component {
     title: "",
     category: "",
     body: ""
-
   }
 
   notEmptyString = s => {
@@ -35,6 +35,13 @@ class PostForm extends Component {
     this.setState({[fieldName]: value})
   }
 
+  submitForm = () => {
+    const { author, title, category, body } = this.state
+    this.props.createPost({ author, title, category, body }).then(() =>
+      this.props.closeModal()
+    )
+  }
+
   render() {
     const { categories, closeModal, isOpen } = this.props
     const { author, title, category, body } = this.state
@@ -44,6 +51,34 @@ class PostForm extends Component {
           isOpen={isOpen}
           aria={{
             labelledby: "heading"
+          }}
+          style={{
+            overlay : {
+              position          : 'fixed',
+              top               : 0,
+              left              : 0,
+              right             : 0,
+              bottom            : 0,
+              backgroundColor   : 'rgba(255, 255, 255, 0.75)'
+            },
+            content : {
+              margin                     : '0 auto',
+              width                      : '50%',
+              "min-width"                : '500px',
+              position                   : 'absolute',
+              top                        : '40px',
+              left                       : '40px',
+              right                      : '40px',
+              bottom                     : '40px',
+              border                     : '1px solid #ccc',
+              background                 : '#fff',
+              overflow                   : 'auto',
+              WebkitOverflowScrolling    : 'touch',
+              borderRadius               : '4px',
+              outline                    : 'none',
+              padding                    : '20px'
+
+            }
           }}>
         <h1 id="heading">Create new post</h1>
         <hr/>
@@ -103,7 +138,13 @@ class PostForm extends Component {
           </FormGroup>
         </form>
         <Button bsStyle="danger" onClick={closeModal}>Cancel</Button>
-        <Button bsStyle="primary" className="form-submit-button" disabled={this.isFormDisabled()}>Create</Button>
+        <Button
+            className="form-submit-button"
+            bsStyle="primary"
+            disabled={this.isFormDisabled()}
+            onClick={this.submitForm}>
+          Submit
+        </Button>
       </Modal>
     )
   }
@@ -113,7 +154,14 @@ function mapStateToProps ({ posts, categories }) {
   return { posts, categories }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    createPost: post => dispatch(createPost(post))
+  }
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(PostForm)
 

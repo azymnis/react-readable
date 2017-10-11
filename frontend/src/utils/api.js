@@ -50,6 +50,10 @@ export function downVotePost(id) {
   return updateWithData(`${api}/posts/${id}`, 'POST', {option: 'downVote'})
 }
 
+export function createPost(post) {
+  return updateWithData(`${api}/posts`, 'POST', post)
+}
+
 /**
  * This will return a promise of an object which has three keys:
  * posts, comments and categories. The value of posts is a map of postId to post.
