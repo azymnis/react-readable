@@ -72,7 +72,7 @@ class PostForm extends Component {
   }
 
   render() {
-    const { newPost, postId } = this.props.postForm
+    const { newPost } = this.props.postForm
     const { categories } = this.props
     const { author, title, category, body } = this.state
 
@@ -115,7 +115,7 @@ class PostForm extends Component {
         <form>
           <FormGroup
             controlId="formControlsAuthor"
-            validationState={this.notEmptyString(author)}>
+            validationState={newPost ? this.notEmptyString(author) : null}>
             <ControlLabel>Author</ControlLabel>
             <FormControl
               type="text"
@@ -142,7 +142,7 @@ class PostForm extends Component {
 
           <FormGroup
               controlId="formControlsCategorySelect"
-              validationState={this.notEmptyString(category)}>
+              validationState={newPost ? this.notEmptyString(category) : null}>
             <ControlLabel>Category</ControlLabel>
             <FormControl
               componentClass="select"

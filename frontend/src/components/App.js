@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchInitialState } from '../actions'
-import ReadableNavbar from './ReadableNavbar'
 import PostList from './PostList'
 
 class App extends Component {
@@ -11,9 +11,9 @@ class App extends Component {
 
   render() {
     return (
-      <ReadableNavbar>
-        <PostList/>
-      </ReadableNavbar>
+      <div className="app">
+        <Route exact path='/' component={PostList}/>
+      </div>
     )
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
@@ -17,7 +18,7 @@ class ReadableNavbar extends Component {
           <Navbar inverse>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/">React-Readable</a>
+                <Link to='/'>React-Readable</Link>
               </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
