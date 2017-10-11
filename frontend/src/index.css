@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.form-submit-button {
+  margin-left: 10px;
+}
+
 .vote-panel .panel-body {
   padding-top: 5px;
   padding-bottom: 0;

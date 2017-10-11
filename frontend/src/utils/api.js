@@ -31,7 +31,7 @@ function getUrlToJson(url) {
 }
 
 export function getAllCategories() {
-  return getUrlToJson(`${api}/categories`)
+  return getUrlToJson(`${api}/categories`).then(res => res.categories)
 }
 
 export function getAllPosts() {
