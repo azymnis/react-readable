@@ -54,6 +54,10 @@ export function createPost(post) {
   return updateWithData(`${api}/posts`, 'POST', post)
 }
 
+export function updatePost({id, title, body}) {
+  return updateWithData(`${api}/posts/${id}`, 'PUT', {title, body})
+}
+
 export function deletePost(id) {
   return updateWithData(`${api}/posts/${id}`, 'DELETE', {})
 }

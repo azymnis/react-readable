@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
-import { createPost } from '../actions'
+import { createPost, closePostForm, editPost } from '../actions'
 
 class PostForm extends Component {
   state = {
@@ -13,6 +13,28 @@ class PostForm extends Component {
     title: "",
     category: "",
     body: ""
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { modalOpen, newPost, postId } = nextProps.postForm
+    if (modalOpen && newPost) {
+      this.setState({
+        author: "",
+        title: "",
+        category: "",
+        body: ""
+      })
+    }
+
+    if (modalOpen && !newPost) {
+      const postToEdit = nextProps.posts[postId]
+      this.setState({
+        author: postToEdit.author,
+        title: postToEdit.title,
+        category: postToEdit.category,
+        body: postToEdit.body
+      })
+    }
   }
 
   notEmptyString = s => {
@@ -37,24 +59,26 @@ class PostForm extends Component {
 
   submitForm = () => {
     const { author, title, category, body } = this.state
-    this.props.createPost({ author, title, category, body }).then(() => {
-      this.setState({
-        author: "",
-        title: "",
-        category: "",
-        body: ""
-      })
-      this.props.closeModal()
+    const { newPost, postId } = this.props.postForm
+    let postPromise
+    if (newPost) {
+      postPromise = this.props.createPost({ author, title, category, body })
+    } else {
+      postPromise = this.props.editPost({id: postId, title, body})
+    }
+    postPromise.then(() => {
+      this.props.closePostForm()
     })
   }
 
   render() {
-    const { categories, closeModal, isOpen } = this.props
+    const { newPost, postId } = this.props.postForm
+    const { categories } = this.props
     const { author, title, category, body } = this.state
 
     return (
       <Modal
-          isOpen={isOpen}
+          isOpen={this.props.postForm.modalOpen}
           aria={{
             labelledby: "heading"
           }}
@@ -96,6 +120,7 @@ class PostForm extends Component {
             <FormControl
               type="text"
               value={author}
+              disabled={!newPost}
               onChange={e => this.updateState("author", e.target.value)}
               placeholder="Enter name of author"
             />
@@ -122,6 +147,7 @@ class PostForm extends Component {
             <FormControl
               componentClass="select"
               value={category}
+              disabled={!newPost}
               onChange={e => this.updateState("category", e.target.value)}>
               <option value="">...</option>
               {categories.map(cat =>
@@ -143,26 +169,29 @@ class PostForm extends Component {
             <FormControl.Feedback/>
           </FormGroup>
         </form>
-        <Button bsStyle="danger" onClick={closeModal}>Cancel</Button>
+        <Button bsStyle="danger" onClick={this.props.closePostForm}>Cancel</Button>
         <Button
             className="form-submit-button"
             bsStyle="primary"
             disabled={this.isFormDisabled()}
             onClick={this.submitForm}>
-          Submit
+          {newPost && "Create"}
+          {!newPost && "Update"}
         </Button>
       </Modal>
     )
   }
 }
 
-function mapStateToProps ({ posts, categories }) {
-  return { posts, categories }
+function mapStateToProps ({ posts, categories, postForm }) {
+  return { posts, categories, postForm }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createPost: post => dispatch(createPost(post))
+    createPost: post => dispatch(createPost(post)),
+    editPost: post => dispatch(editPost(post)),
+    closePostForm: () => dispatch(closePostForm())
   }
 }
 

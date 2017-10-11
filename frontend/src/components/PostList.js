@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { upVotePost, downVotePost, deletePost } from '../actions'
+import { upVotePost, downVotePost, deletePost, openEditPost } from '../actions'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import Panel from 'react-bootstrap/lib/Panel'
@@ -24,7 +24,7 @@ class PostList extends Component {
           <Col xs={8} md={10} lg={10}>
             <h3><a>{posts[id].title}</a></h3>
             <h4>by <em>{posts[id].author}</em> with {posts[id].comments.length} comments</h4>
-            <Button bsStyle="primary">Edit <Glyphicon glyph="pencil" /></Button>
+            <Button bsStyle="primary" onClick={() => this.props.openEditPost(id)}>Edit <Glyphicon glyph="pencil" /></Button>
             <Button bsStyle="danger" onClick={() => this.props.deletePost(id)}>Delete <Glyphicon glyph="remove" /></Button>
           </Col>
         </Row>
@@ -40,7 +40,8 @@ function mapDispatchToProps (dispatch) {
   return {
     upVotePost: id => dispatch(upVotePost(id)),
     downVotePost: id => dispatch(downVotePost(id)),
-    deletePost: id => dispatch(deletePost(id))
+    deletePost: id => dispatch(deletePost(id)),
+    openEditPost: id => dispatch(openEditPost(id))
   }
 }
 

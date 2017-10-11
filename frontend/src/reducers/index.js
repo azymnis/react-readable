@@ -1,12 +1,21 @@
 import { combineReducers } from 'redux'
-import { INITIALIZE_STATE, UP_VOTE_POST, DOWN_VOTE_POST, CREATE_POST, DELETE_POST } from '../actions'
+import {
+  INITIALIZE_STATE,
+  UP_VOTE_POST,
+  DOWN_VOTE_POST,
+  CREATE_POST,
+  EDIT_POST,
+  DELETE_POST,
+  OPEN_NEW_POST,
+  OPEN_EDIT_POST,
+  CLOSE_POST_FORM } from '../actions'
 
 function posts(state = {}, action) {
+  const {id, timestamp, title, body, author, category} = action
   switch (action.type) {
     case INITIALIZE_STATE:
       return action.posts
     case CREATE_POST:
-      const {id, timestamp, title, body, author, category} = action
       return {
         ...state,
         [id]: {
@@ -20,9 +29,18 @@ function posts(state = {}, action) {
           comments: []
         }
       }
+    case EDIT_POST:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          title,
+          body
+        }
+      }
     case DELETE_POST:
       const filtered = Object.keys(state)
-        .filter(key => key !== action.id)
+        .filter(key => key !== id)
         .reduce((obj, key) => {
           obj[key] = state[key]
           return obj
@@ -31,17 +49,17 @@ function posts(state = {}, action) {
     case UP_VOTE_POST:
       return {
         ...state,
-        [action.id]: {
-          ...state[action.id],
-          voteScore: state[action.id].voteScore + 1
+        [id]: {
+          ...state[id],
+          voteScore: state[id].voteScore + 1
         }
       }
     case DOWN_VOTE_POST:
       return {
         ...state,
-        [action.id]: {
-          ...state[action.id],
-          voteScore: state[action.id].voteScore - 1
+        [id]: {
+          ...state[id],
+          voteScore: state[id].voteScore - 1
         }
       }
     default:
@@ -66,6 +84,28 @@ function comments(state = {}, action) {
   }
 }
 
+function postForm(state = {}, action) {
+  switch (action.type) {
+    case OPEN_NEW_POST:
+      return {
+        modalOpen: true,
+        newPost: true,
+      }
+    case OPEN_EDIT_POST:
+      return {
+        modalOpen: true,
+        newPost: false,
+        postId: action.id
+      }
+    case CLOSE_POST_FORM:
+      return {
+        modalOpen: false
+      }
+    default:
+      return state
+  }
+}
+
 function categories(state = [], action) {
   switch (action.type) {
     case INITIALIZE_STATE:
@@ -78,6 +118,7 @@ function categories(state = [], action) {
 export default combineReducers({
   posts,
   comments,
-  categories
+  categories,
+  postForm
 })
 

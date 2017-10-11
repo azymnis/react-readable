@@ -22,11 +22,14 @@ export function fetchInitialState() {
 }
 
 // Post actions
-export const CREATE_POST    = "CREATE_POST"
-export const DELETE_POST    = "DELETE_POST"
-export const EDIT_POST      = "EDIT_POST"
-export const UP_VOTE_POST   = "UP_VOTE_POST"
-export const DOWN_VOTE_POST = "DOWN_VOTE_POST"
+export const CREATE_POST     = "CREATE_POST"
+export const DELETE_POST     = "DELETE_POST"
+export const EDIT_POST       = "EDIT_POST"
+export const UP_VOTE_POST    = "UP_VOTE_POST"
+export const DOWN_VOTE_POST  = "DOWN_VOTE_POST"
+export const OPEN_NEW_POST   = "OPEN_NEW_POST"
+export const OPEN_EDIT_POST  = "OPEN_EDIT_POST"
+export const CLOSE_POST_FORM = "CLOSE_POST_FORM"
 
 export function createPost({title, body, author, category}) {
   return dispatch => {
@@ -54,17 +57,21 @@ export function deletePost(id) {
 }
 
 export function editPost({id, title, body}) {
-  return {
-    type: EDIT_POST,
-    id,
-    title,
-    body
+  return dispatch => {
+    return BackendAPI.updatePost({id, title, body}).then(() =>
+      dispatch({
+        type: EDIT_POST,
+        id,
+        title,
+        body
+      })
+    )
   }
 }
 
 export function upVotePost(id) {
   return dispatch => {
-    BackendAPI.upVotePost(id).then(() =>
+    return BackendAPI.upVotePost(id).then(() =>
       dispatch({
         type: UP_VOTE_POST,
         id
@@ -75,12 +82,31 @@ export function upVotePost(id) {
 
 export function downVotePost(id) {
   return dispatch => {
-    BackendAPI.downVotePost(id).then(() =>
+    return BackendAPI.downVotePost(id).then(() =>
       dispatch({
         type: DOWN_VOTE_POST,
         id
       })
     )
+  }
+}
+
+export function openNewPost() {
+  return {
+    type: OPEN_NEW_POST
+  }
+}
+
+export function closePostForm() {
+  return {
+    type: CLOSE_POST_FORM
+  }
+}
+
+export function openEditPost(id) {
+  return {
+    type: OPEN_EDIT_POST,
+    id
   }
 }
 
