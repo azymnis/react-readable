@@ -10,15 +10,17 @@ import Badge from 'react-bootstrap/lib/Badge'
 import ReadableNavbar from './ReadableNavbar'
 
 class PostList extends Component {
-  state = {
-    sortOrder: "timeDescending"
-  }
-
   render() {
     const posts = this.props.posts
+    const category =  this.props.match.params.category
+
+    const filteredKeys = Object.keys(posts).filter(id =>
+      !category || posts[id].category === category
+    )
+
     return (
       <ReadableNavbar>
-        {Object.keys(posts).length > 0 ? Object.keys(posts).map( (id, index) => (
+        {filteredKeys.length > 0 ? filteredKeys.map( (id, index) => (
           <Row key={id}>
             <Col className="vote-element" xs={1} md={1} lg={1}>
               <Panel className="vote-panel">
@@ -35,7 +37,7 @@ class PostList extends Component {
               <Button bsStyle="danger" onClick={() => this.props.deletePost(id)}>Delete <Glyphicon glyph="remove" /></Button>
             </Col>
           </Row>
-        )) : (<Row>No posts!</Row>)}
+        )) : (<Row><h1>No posts!</h1></Row>)}
       </ReadableNavbar>
     )
   }

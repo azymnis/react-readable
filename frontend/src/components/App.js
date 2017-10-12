@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchInitialState } from '../actions'
 import PostList from './PostList'
@@ -11,9 +11,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <Switch>
         <Route exact path='/' component={PostList}/>
-      </div>
+        <Route path='/:category' component={PostList}/>
+      </Switch>
     )
   }
 }
