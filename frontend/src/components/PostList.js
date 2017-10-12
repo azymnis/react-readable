@@ -10,6 +10,10 @@ import Badge from 'react-bootstrap/lib/Badge'
 import ReadableNavbar from './ReadableNavbar'
 
 class PostList extends Component {
+  state = {
+    sortOrder: "timeDescending"
+  }
+
   render() {
     const posts = this.props.posts
     return (

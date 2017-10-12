@@ -110,7 +110,8 @@ class PostForm extends Component {
 
             }
           }}>
-        <h1 id="heading">Create new post</h1>
+        {newPost && (<h1 id="heading">Create new post</h1>)}
+        {!newPost && (<h1 id="heading">Edit post</h1>)}
         <hr/>
         <form>
           <FormGroup
