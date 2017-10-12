@@ -42,7 +42,7 @@ class PostList extends Component {
     const category =  this.props.match.params.category
 
     const filteredPosts = posts.filter(post =>
-      !category || post.category === category
+      !post.deleted && (!category || post.category === category)
     )
 
     filteredPosts.sort(this.getSortOrder())

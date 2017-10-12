@@ -41,13 +41,13 @@ function posts(state = {}, action) {
         }
       }
     case DELETE_POST:
-      const filtered = Object.keys(state)
-        .filter(key => key !== id)
-        .reduce((obj, key) => {
-          obj[key] = state[key]
-          return obj
-        }, {})
-      return filtered
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          deleted: true
+        }
+      }
     case UP_VOTE_POST:
       return {
         ...state,
@@ -74,13 +74,17 @@ function comments(state = {}, action) {
     case INITIALIZE_STATE:
       return action.comments
     case DELETE_POST:
-      const filtered = Object.keys(state)
-        .filter(key => state[key].parentId !== action.id)
+      const newState = Object.keys(state)
         .reduce((obj, key) => {
           obj[key] = state[key]
           return obj
         }, {})
-      return filtered
+      Object.keys(newState).forEach(key => {
+        if (newState[key].parentId === action.id) {
+          newState[key].deleted = true
+        }
+      })
+      return newState
     default:
       return state
   }
