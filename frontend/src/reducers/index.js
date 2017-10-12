@@ -9,6 +9,8 @@ import {
   OPEN_NEW_POST,
   OPEN_EDIT_POST,
   CLOSE_POST_FORM } from '../actions'
+import { routerReducer } from 'react-router-redux'
+
 
 function posts(state = {}, action) {
   const {id, timestamp, title, body, author, category} = action
@@ -119,6 +121,7 @@ export default combineReducers({
   posts,
   comments,
   categories,
-  postForm
+  postForm,
+  router: routerReducer
 })
 

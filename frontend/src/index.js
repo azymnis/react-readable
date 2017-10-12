@@ -7,19 +7,22 @@ import reducer from './reducers'
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker'
-import { BrowserRouter } from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+
+const history = createHistory()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
   reducer,
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(thunk, routerMiddleware(history)))
 )
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <App />
-    </BrowserRouter>
+    </ConnectedRouter>
   </Provider>, document.getElementById('root'))
 registerServiceWorker()

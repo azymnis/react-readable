@@ -11,6 +11,7 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import PostForm from './PostForm'
 import { openNewPost } from '../actions'
+import { push } from 'react-router-redux'
 
 class ReadableNavbar extends Component {
   render() {
@@ -30,7 +31,7 @@ class ReadableNavbar extends Component {
                     (<MenuItem
                         key={cat.name}
                         eventKey={1.1 + 0.1 * index}
-                        onClick={() => console.log(this)}>{cat.name}</MenuItem>)
+                        onClick={() => this.props.redirectToCategory(cat.path)}>{cat.name}</MenuItem>)
                   )}
                 </NavDropdown>
               </Nav>
@@ -55,7 +56,8 @@ function mapStateToProps ({ categories }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    openNewPost: () => dispatch(openNewPost())
+    openNewPost: () => dispatch(openNewPost()),
+    redirectToCategory: cat => dispatch(push('/' + cat))
   }
 }
 

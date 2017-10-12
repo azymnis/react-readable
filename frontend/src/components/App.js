@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchInitialState } from '../actions'
 import PostList from './PostList'
+import { withRouter } from 'react-router'
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   null,
   mapDispatchToProps
-)(App)
+)(App))
