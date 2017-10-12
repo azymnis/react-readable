@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import sortBy from 'sort-by'
-import { upVotePost, downVotePost, deletePost, openEditPost } from '../actions'
+import PostSummary from './PostSummary'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
-import Panel from 'react-bootstrap/lib/Panel'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import Button from 'react-bootstrap/lib/Button'
-import Badge from 'react-bootstrap/lib/Badge'
 import ReadableNavbar from './ReadableNavbar'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Form from 'react-bootstrap/lib/Form'
-import moment from 'moment'
 
 // These are the supported sort orders
 const TIME_DESCENDING = "TIME_DESCENDING"
@@ -55,7 +50,7 @@ class PostList extends Component {
     return (
       <ReadableNavbar>
         <Row>
-          <Col className="vote-element" xs={2} md={2} lg={2}>
+          <Col xs={2} md={2} lg={2}>
             <Form>
               <FormGroup controlId="formSortOrderSelect">
                 <ControlLabel>Sort posts by</ControlLabel>
@@ -73,22 +68,7 @@ class PostList extends Component {
         </Row>
 
         {filteredPosts.length > 0 ? filteredPosts.map( post => (
-          <Row key={post.id}>
-            <Col className="vote-element" xs={1} md={1} lg={1}>
-              <Panel className="vote-panel">
-                <div className="vote-top" onClick={() => this.props.upVotePost(post)}><Glyphicon glyph="triangle-top" /></div>
-                <div className="vote-badge"><Badge>{post.voteScore}</Badge></div>
-                <div className="vote-text"><strong>votes</strong></div>
-                <div className="vote-bottom" onClick={() => this.props.downVotePost(post)}><Glyphicon glyph="triangle-bottom" /></div>
-              </Panel>
-            </Col>
-            <Col xs={8} md={10} lg={10}>
-              <h3><a>{post.title}</a></h3>
-              <h4>posted at <em>{moment(post.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</em> by <strong>{post.author}</strong> with {post.comments.length} comments</h4>
-              <Button bsStyle="primary" onClick={() => this.props.openEditPost(post)}>Edit <Glyphicon glyph="pencil" /></Button>
-              <Button bsStyle="danger" onClick={() => this.props.deletePost(post)}>Delete <Glyphicon glyph="remove" /></Button>
-            </Col>
-          </Row>
+          <PostSummary key={post.id} post={post} />
         )) : (<Row><h1>No posts!</h1></Row>)}
       </ReadableNavbar>
     )
@@ -99,16 +79,6 @@ function mapStateToProps ({ posts }) {
   return { posts }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    upVotePost: post => dispatch(upVotePost(post.id)),
-    downVotePost: post => dispatch(downVotePost(post.id)),
-    deletePost: post => dispatch(deletePost(post.id)),
-    openEditPost: post => dispatch(openEditPost(post.id))
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(PostList)
