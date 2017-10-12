@@ -82,6 +82,7 @@ function comments(state = {}, action) {
       Object.keys(newState).forEach(key => {
         if (newState[key].parentId === action.id) {
           newState[key].deleted = true
+          newState[key].parentDeleted = true
         }
       })
       return newState

@@ -69,7 +69,7 @@ class PostList extends Component {
 
         {filteredPosts.length > 0 ? filteredPosts.map( post => (
           <PostSummary key={post.id} post={post} />
-        )) : (<Row><h1>No posts!</h1></Row>)}
+        )) : (<Row><Col xs={12} md={12} lg={12}><h1>No posts!</h1></Col></Row>)}
       </ReadableNavbar>
     )
   }

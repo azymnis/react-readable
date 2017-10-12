@@ -7,11 +7,11 @@ import Panel from 'react-bootstrap/lib/Panel'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Button from 'react-bootstrap/lib/Button'
 import Badge from 'react-bootstrap/lib/Badge'
-import moment from 'moment'
+import { humanize } from '../utils/time'
 import { Link } from 'react-router-dom'
 
-const PostSummary = ({ post, upVotePost, downVotePost, deletePost, openEditPost }) => {
-  const numComments = post.comments.filter(c => !c.deleted).length
+const PostSummary = ({ post, comments, upVotePost, downVotePost, deletePost, openEditPost }) => {
+  const numComments = post.comments.filter(c => !comments[c].deleted).length
   return (
     <Row>
       <Col className="vote-element" xs={1} md={1} lg={1}>
@@ -24,12 +24,16 @@ const PostSummary = ({ post, upVotePost, downVotePost, deletePost, openEditPost 
       </Col>
       <Col xs={8} md={10} lg={10}>
         <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
-        <h4>posted at <em>{moment(post.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</em> by <strong>{post.author}</strong> with {numComments} comments</h4>
+        <h4>posted at <em>{humanize(post.timestamp)}</em> by <strong>{post.author}</strong> with {numComments} comments</h4>
         <Button bsStyle="primary" onClick={() => openEditPost(post)}>Edit <Glyphicon glyph="pencil" /></Button>
         <Button bsStyle="danger" onClick={() => deletePost(post)}>Delete <Glyphicon glyph="remove" /></Button>
       </Col>
     </Row>
   )
+}
+
+function mapStateToProps ({ comments }) {
+  return { comments }
 }
 
 function mapDispatchToProps (dispatch) {
@@ -42,6 +46,6 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PostSummary)
