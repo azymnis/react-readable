@@ -50,6 +50,12 @@ class PostList extends Component {
     return (
       <ReadableNavbar>
         <Row>
+          <Col xs={12} md={12} lg={12}>
+            {!category && (<h1>Showing all posts</h1>)}
+            {category && (<h1>Showing posts for category: {category}</h1>)}
+          </Col>
+        </Row>
+        <Row>
           <Col xs={2} md={2} lg={2}>
             <Form>
               <FormGroup controlId="formSortOrderSelect">
