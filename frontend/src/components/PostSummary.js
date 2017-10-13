@@ -26,7 +26,7 @@ const PostSummary = ({ post, comments, upVotePost, downVotePost, deletePost, ope
         <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
         <h4>posted at <em>{humanize(post.timestamp)}</em> by <strong>{post.author}</strong> with {numComments} comments</h4>
         <Button bsStyle="primary" onClick={() => openEditPost(post)}>Edit <Glyphicon glyph="pencil" /></Button>
-        <Button bsStyle="danger" onClick={() => deletePost(post)}>Delete <Glyphicon glyph="remove" /></Button>
+        <Button bsStyle="danger" className="post-delete-button" onClick={() => deletePost(post)}>Delete <Glyphicon glyph="remove" /></Button>
       </Col>
     </Row>
   )

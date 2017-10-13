@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.post-delete-button {
+  margin-left: 10px;
+}
+
 .form-submit-button {
   margin-left: 10px;
 }
@@ -68,4 +72,22 @@ body {
   -moz-user-select: none; /* mozilla browsers */
   -khtml-user-select: none; /* webkit (konqueror) browsers */
   -ms-user-select: none; /* IE10+ */
+}
+
+.content-list-animation-enter {
+  opacity: 0.01;
+}
+
+.content-list-animation-enter.content-list-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.content-list-animation-leave {
+  opacity: 1;
+}
+
+.content-list-animation-leave.content-list-animation-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

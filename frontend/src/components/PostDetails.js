@@ -13,6 +13,7 @@ import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Panel from 'react-bootstrap/lib/Panel'
 import Button from 'react-bootstrap/lib/Button'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 class PostDetails extends Component {
   state = {
@@ -102,15 +103,20 @@ class PostDetails extends Component {
               </Panel>
             </Col>
           </Row>
-          {validComments.map(comment =>
-            (<Comment comment={comment} key={comment.id}/>)
-          )}
+          <CSSTransitionGroup
+              transitionName="content-list-animation"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}>
+            {validComments.map(comment =>
+              (<Comment comment={comment} key={comment.id}/>)
+            )}
+          </CSSTransitionGroup>
         </ReadableNavbar>
       )
     } else {
       return (
         <ReadableNavbar>
-          <Row><h1>Post not found!</h1></Row>
+          <Row><Col xs={12} md={12} lg={12}><h1>Post not found!</h1></Col></Row>
         </ReadableNavbar>
       )
     }
