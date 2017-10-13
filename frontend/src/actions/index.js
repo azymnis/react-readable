@@ -129,9 +129,13 @@ export function createComment({id, timestamp, body, author, parentId}) {
 }
 
 export function deleteComment(id) {
-  return {
-    type: DELETE_COMMENT,
-    id
+  return dispatch => {
+    BackendAPI.deleteComment(id).then(() =>
+      dispatch({
+        type: DELETE_COMMENT,
+        id
+      })
+    )
   }
 }
 
@@ -145,15 +149,23 @@ export function editComment({id, title, body}) {
 }
 
 export function upVoteComment(id) {
-  return {
-    type: UP_VOTE_COMMENT,
-    id
+  return dispatch => {
+    return BackendAPI.upVoteComment(id).then(() =>
+      dispatch({
+        type: UP_VOTE_COMMENT,
+        id
+      })
+    )
   }
 }
 
 export function downVoteComment(id) {
-  return {
-    type: DOWN_VOTE_COMMENT,
-    id
+  return dispatch => {
+    return BackendAPI.downVoteComment(id).then(() =>
+      dispatch({
+        type: DOWN_VOTE_COMMENT,
+        id
+      })
+    )
   }
 }

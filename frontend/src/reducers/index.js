@@ -8,7 +8,10 @@ import {
   DELETE_POST,
   OPEN_NEW_POST,
   OPEN_EDIT_POST,
-  CLOSE_POST_FORM } from '../actions'
+  CLOSE_POST_FORM,
+  UP_VOTE_COMMENT,
+  DOWN_VOTE_COMMENT,
+  DELETE_COMMENT } from '../actions'
 import { routerReducer } from 'react-router-redux'
 
 
@@ -70,9 +73,34 @@ function posts(state = {}, action) {
 }
 
 function comments(state = {}, action) {
+  const { id } = action
   switch (action.type) {
     case INITIALIZE_STATE:
       return action.comments
+    case UP_VOTE_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          voteScore: state[id].voteScore + 1
+        }
+      }
+    case DOWN_VOTE_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          voteScore: state[id].voteScore - 1
+        }
+      }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          deleted: true
+        }
+      }
     case DELETE_POST:
       const newState = Object.keys(state)
         .reduce((obj, key) => {
@@ -80,7 +108,7 @@ function comments(state = {}, action) {
           return obj
         }, {})
       Object.keys(newState).forEach(key => {
-        if (newState[key].parentId === action.id) {
+        if (newState[key].parentId === id) {
           newState[key].deleted = true
           newState[key].parentDeleted = true
         }

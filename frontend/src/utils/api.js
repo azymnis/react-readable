@@ -62,6 +62,18 @@ export function deletePost(id) {
   return updateWithData(`${api}/posts/${id}`, 'DELETE', {})
 }
 
+export function upVoteComment(id) {
+  return updateWithData(`${api}/comments/${id}`, 'POST', {option: 'upVote'})
+}
+
+export function downVoteComment(id) {
+  return updateWithData(`${api}/comments/${id}`, 'POST', {option: 'downVote'})
+}
+
+export function deleteComment(id) {
+  return updateWithData(`${api}/comments/${id}`, 'DELETE', {})
+}
+
 /**
  * This will return a promise of an object which has three keys:
  * posts, comments and categories. The value of posts is a map of postId to post.

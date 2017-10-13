@@ -30,7 +30,7 @@ body {
   text-align: center;
 }
 
-.vote-top:hover, .vote-bottom:hover {
+.vote-top:hover, .vote-bottom:hover, .comment-arrow:hover {
   color: blue;
   cursor: pointer;
   cursor: hand;
