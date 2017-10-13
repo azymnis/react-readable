@@ -117,20 +117,23 @@ export const EDIT_COMMENT      = "EDIT_COMMENT"
 export const UP_VOTE_COMMENT   = "UP_VOTE_COMMENT"
 export const DOWN_VOTE_COMMENT = "DOWN_VOTE_COMMENT"
 
-export function createComment({id, timestamp, body, author, parentId}) {
-  return {
-    type: CREATE_COMMENT,
-    id,
-    timestamp,
-    body,
-    author,
-    parentId
+export function createComment({body, author, parentId}) {
+  return dispatch => {
+    const id = uuidv4()
+    const timestamp = Date.now()
+    const comment = {id, timestamp, body, author, parentId }
+    return BackendAPI.createComment(comment).then(() =>
+      dispatch({
+        type: CREATE_COMMENT,
+        ...comment
+      })
+    )
   }
 }
 
 export function deleteComment(id) {
   return dispatch => {
-    BackendAPI.deleteComment(id).then(() =>
+    return BackendAPI.deleteComment(id).then(() =>
       dispatch({
         type: DELETE_COMMENT,
         id
@@ -139,12 +142,17 @@ export function deleteComment(id) {
   }
 }
 
-export function editComment({id, title, body}) {
-  return {
-    type: EDIT_COMMENT,
-    id,
-    title,
-    body
+export function editComment({id, body}) {
+  return dispatch => {
+    const timestamp = Date.now()
+    return BackendAPI.updateComment({id, body, timestamp}).then(() =>
+      dispatch({
+        type: EDIT_COMMENT,
+        id,
+        body,
+        timestamp
+      })
+    )
   }
 }
 

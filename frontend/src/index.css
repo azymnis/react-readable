@@ -49,3 +49,23 @@ body {
   text-align: center;
   font-size: 15px;
 }
+
+.link-delete {
+  color: #DE2342 !important;
+}
+
+.link-edit {
+  color: #B2B26C !important;
+}
+
+.link-edit, .link-delete {
+  padding-left: 15px;
+  font-style: italic;
+}
+
+.comment-title {
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+}

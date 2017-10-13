@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Grid from 'react-bootstrap/lib/Grid'
@@ -13,41 +13,39 @@ import PostForm from './PostForm'
 import { openNewPost } from '../actions'
 import { push } from 'react-router-redux'
 
-class ReadableNavbar extends Component {
-  render() {
-    return (
-      <Grid>
-        <Row>
-          <Navbar inverse>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to='/'>React-Readable</Link>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav>
-                <NavDropdown eventKey={1} title="Categories" id="categories-nav-dropdown">
-                  {this.props.categories.map((cat, index) =>
-                    (<MenuItem
-                        key={cat.name}
-                        eventKey={1.1 + 0.1 * index}
-                        onClick={() => this.props.redirectToCategory(cat.path)}>{cat.name}</MenuItem>)
-                  )}
-                </NavDropdown>
-              </Nav>
-              <Nav pullRight>
-                <NavItem eventKey={1} onClick={this.props.openNewPost}>Create Post <Glyphicon glyph="pencil" /></NavItem>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-        </Row>
+const ReadableNavbar = ({categories, redirectToCategory, openNewPost, children}) => {
+  return (
+    <Grid>
+      <Row>
+        <Navbar inverse>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to='/'>React-Readable</Link>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavDropdown eventKey={1} title="Categories" id="categories-nav-dropdown">
+                {categories.map((cat, index) =>
+                  (<MenuItem
+                      key={cat.name}
+                      eventKey={1.1 + 0.1 * index}
+                      onClick={() => redirectToCategory(cat.path)}>{cat.name}</MenuItem>)
+                )}
+              </NavDropdown>
+            </Nav>
+            <Nav pullRight>
+              <NavItem eventKey={1} onClick={openNewPost}>Create Post <Glyphicon glyph="pencil" /></NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </Row>
 
-        {this.props.children}
+      {children}
 
-        <PostForm />
-      </Grid>
-    )
-  }
+      <PostForm />
+    </Grid>
+  )
 }
 
 function mapStateToProps ({ categories }) {

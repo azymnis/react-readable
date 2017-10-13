@@ -11,7 +11,9 @@ import {
   CLOSE_POST_FORM,
   UP_VOTE_COMMENT,
   DOWN_VOTE_COMMENT,
-  DELETE_COMMENT } from '../actions'
+  DELETE_COMMENT,
+  EDIT_COMMENT,
+  CREATE_COMMENT } from '../actions'
 import { routerReducer } from 'react-router-redux'
 
 
@@ -30,6 +32,7 @@ function posts(state = {}, action) {
           body,
           author,
           category,
+          deleted: false,
           voteScore: 1,
           comments: []
         }
@@ -67,13 +70,21 @@ function posts(state = {}, action) {
           voteScore: state[id].voteScore - 1
         }
       }
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          comments: state[action.parentId].comments.concat([action.id])
+        }
+      }
     default:
       return state
   }
 }
 
 function comments(state = {}, action) {
-  const { id } = action
+  const { id, body, timestamp, author, parentId } = action
   switch (action.type) {
     case INITIALIZE_STATE:
       return action.comments
@@ -101,6 +112,15 @@ function comments(state = {}, action) {
           deleted: true
         }
       }
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          body,
+          timestamp
+        }
+      }
     case DELETE_POST:
       const newState = Object.keys(state)
         .reduce((obj, key) => {
@@ -109,11 +129,23 @@ function comments(state = {}, action) {
         }, {})
       Object.keys(newState).forEach(key => {
         if (newState[key].parentId === id) {
-          newState[key].deleted = true
           newState[key].parentDeleted = true
         }
       })
       return newState
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          id,
+          timestamp,
+          body,
+          author,
+          parentId,
+          voteScore: 1,
+          deleted: false
+        }
+      }
     default:
       return state
   }
