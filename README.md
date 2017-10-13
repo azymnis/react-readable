@@ -9,20 +9,16 @@ but with a lot less complexity (specifically no auth or user model).
 You first need to install all dependencies for the backend server and start it up.
 In a terminal window do this:
 
-    ```
     cd api-server
     npm install
     npm start
-    ```
 
 You then need to install all dependencies and start the front-end development server.
 In a separate terminal window do this:
 
-    ```
     cd frontend
     npm install
     npm start
-    ```
 
 ## Usage
 
