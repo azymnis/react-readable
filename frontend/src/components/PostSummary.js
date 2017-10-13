@@ -9,8 +9,9 @@ import Button from 'react-bootstrap/lib/Button'
 import Badge from 'react-bootstrap/lib/Badge'
 import { humanize } from '../utils/time'
 import { Link } from 'react-router-dom'
+import { push } from 'react-router-redux'
 
-const PostSummary = ({ post, comments, upVotePost, downVotePost, deletePost, openEditPost }) => {
+const PostSummary = ({ post, comments, upVotePost, downVotePost, deletePost, openEditPost, redirectAfterDelete, redirectToRoot }) => {
   const numComments = post.comments.filter(c => !comments[c].deleted).length
   return (
     <Row>
@@ -25,8 +26,15 @@ const PostSummary = ({ post, comments, upVotePost, downVotePost, deletePost, ope
       <Col xs={8} md={10} lg={10}>
         <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
         <h4>posted at <em>{humanize(post.timestamp)}</em> by <strong>{post.author}</strong> with {numComments} comments</h4>
-        <Button bsStyle="primary" onClick={() => openEditPost(post)}>Edit <Glyphicon glyph="pencil" /></Button>
-        <Button bsStyle="danger" className="post-delete-button" onClick={() => deletePost(post)}>Delete <Glyphicon glyph="remove" /></Button>
+        <Button
+            bsStyle="primary"
+            onClick={() => openEditPost(post)}>
+          Edit <Glyphicon glyph="pencil" /></Button>
+        <Button
+            bsStyle="danger"
+            className="post-delete-button"
+            onClick={() => deletePost(post).then(() => redirectAfterDelete && redirectToRoot())}>
+          Delete <Glyphicon glyph="remove" /></Button>
       </Col>
     </Row>
   )
@@ -41,7 +49,8 @@ function mapDispatchToProps (dispatch) {
     upVotePost: post => dispatch(upVotePost(post.id)),
     downVotePost: post => dispatch(downVotePost(post.id)),
     deletePost: post => dispatch(deletePost(post.id)),
-    openEditPost: post => dispatch(openEditPost(post.id))
+    openEditPost: post => dispatch(openEditPost(post.id)),
+    redirectToRoot: () => dispatch(push('/'))
   }
 }
 

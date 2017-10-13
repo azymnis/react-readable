@@ -47,7 +47,7 @@ export function createPost({title, body, author, category}) {
 
 export function deletePost(id) {
   return dispatch => {
-    BackendAPI.deletePost(id).then(() =>
+    return BackendAPI.deletePost(id).then(() =>
       dispatch({
         type: DELETE_POST,
         id

@@ -57,7 +57,7 @@ class PostDetails extends Component {
       validComments.sort(sortBy("-timestamp"))
       return (
         <ReadableNavbar>
-          <PostSummary post={post} />
+          <PostSummary post={post} redirectAfterDelete />
           <Row>
             <Col xs={12} md={12} lg={12}><h3>Post content:</h3></Col>
           </Row>
