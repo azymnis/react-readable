@@ -6,6 +6,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import { createPost, closePostForm, editPost } from '../actions'
+import { push } from 'react-router-redux'
 
 class PostForm extends Component {
   state = {
@@ -66,8 +67,9 @@ class PostForm extends Component {
     } else {
       postPromise = this.props.editPost({id: postId, title, body})
     }
-    postPromise.then(() => {
+    postPromise.then(action => {
       this.props.closePostForm()
+      this.props.redirectToPost(action.id, category)
     })
   }
 
@@ -192,7 +194,8 @@ function mapDispatchToProps (dispatch) {
   return {
     createPost: post => dispatch(createPost(post)),
     editPost: post => dispatch(editPost(post)),
-    closePostForm: () => dispatch(closePostForm())
+    closePostForm: () => dispatch(closePostForm()),
+    redirectToPost: (id, category) => dispatch(push(`/${category}/${id}`))
   }
 }
 
