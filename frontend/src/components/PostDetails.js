@@ -13,7 +13,7 @@ import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Panel from 'react-bootstrap/lib/Panel'
 import Button from 'react-bootstrap/lib/Button'
-import { CSSTransitionGroup } from 'react-transition-group'
+import FlipMove from 'react-flip-move'
 
 class PostDetails extends Component {
   state = {
@@ -103,14 +103,11 @@ class PostDetails extends Component {
               </Panel>
             </Col>
           </Row>
-          <CSSTransitionGroup
-              transitionName="content-list-animation"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}>
+          <FlipMove duration={300} easing="ease-out" enterAnimation="fade" leaveAnimation="fade">
             {validComments.map(comment =>
               (<Comment comment={comment} key={comment.id}/>)
             )}
-          </CSSTransitionGroup>
+          </FlipMove>
         </ReadableNavbar>
       )
     } else {

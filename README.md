@@ -33,4 +33,3 @@ create, edit, upvote, downvote, and delete post comments.
 
 1. My CSS UX/UI skills are pretty bad so please excuse the ugliness of this app
 2. I've used `react-bootstrap` for most of the styling but I had issues with the modal class in bootstrap.
-3. I wanted to create an animation for when post or comment order changes based on upvoting/downvoting but it was not clear how I could do that with react transitions.

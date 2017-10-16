@@ -9,7 +9,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Form from 'react-bootstrap/lib/Form'
-import { CSSTransitionGroup } from 'react-transition-group'
+import FlipMove from 'react-flip-move'
 
 // These are the supported sort orders
 const TIME_DESCENDING = "TIME_DESCENDING"
@@ -75,14 +75,11 @@ class PostList extends Component {
         </Row>
 
         {filteredPosts.length > 0 ? (
-          <CSSTransitionGroup
-              transitionName="content-list-animation"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}>
+          <FlipMove duration={300} easing="ease-out" enterAnimation="fade" leaveAnimation="fade">
             {filteredPosts.map( post => (
               <PostSummary key={post.id} post={post} />
             ))}
-          </CSSTransitionGroup>
+          </FlipMove>
         ) : (<Row><Col xs={12} md={12} lg={12}><h1>No posts!</h1></Col></Row>)}
       </ReadableNavbar>
     )
